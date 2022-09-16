@@ -5,6 +5,12 @@
 *.so
 *.dylib
 
+# Name of compiled binary
+jota-host
+
+# Database
+*.db
+
 # Test binary, built with `go test -c`
 *.test
 
