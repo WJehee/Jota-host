@@ -15,6 +15,5 @@ func init() {
     if err != nil {
       log.Fatal("failed to connect to database")
     }
-    DB.AutoMigrate(&Team{})
 }
 
