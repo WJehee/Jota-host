@@ -11,6 +11,9 @@ jota-host
 # Database
 *.db
 
+# JSON files for testing with CURL
+*.json
+
 # Test binary, built with `go test -c`
 *.test
 

@@ -3,9 +3,10 @@ package controllers
 import (
 	"net/http"
 
-    "golang.org/x/crypto/bcrypt"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/wjehee/jota-host/models"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // Register a new team
@@ -25,7 +26,7 @@ func Register(c *gin.Context) {
         if result.RowsAffected == 0 {
             c.Status(http.StatusUnprocessableEntity)
         } else {
-            c.JSON(http.StatusCreated, team)
+            c.Status(http.StatusCreated)
         }
     }
 }
@@ -46,7 +47,12 @@ func Login(c *gin.Context) {
     if err != nil {
         c.Status(http.StatusForbidden)
     } else {
-        // TODO: actually login
+        session := sessions.Default(c)
+        session.Options(sessions.Options{
+            Secure: true,
+        })
+        session.Set("user", login.Username)
+        session.Save()
         c.Status(http.StatusOK)
     }
 }
@@ -54,5 +60,6 @@ func Login(c *gin.Context) {
 func GetTeam(c *gin.Context) {
     var team models.Team
     models.DB.First(&team, "username = ?", "bob")
+    c.JSON(http.StatusOK, team)
 }
 
