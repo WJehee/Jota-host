@@ -58,8 +58,16 @@ func Login(c *gin.Context) {
 }
 
 func GetTeam(c *gin.Context) {
-    var team models.Team
-    models.DB.First(&team, "username = ?", "bob")
+    username := c.Param("username")
+    var team models.APITeam
+    models.DB.Model(models.Team{}).First(&team, "username = ?", username)
     c.JSON(http.StatusOK, team)
 }
+
+func GetTeams(c *gin.Context) {
+    var teams []models.APITeam
+    models.DB.Model(&models.Team{}).Find(&teams)
+    c.JSON(http.StatusOK, teams)
+}
+
 

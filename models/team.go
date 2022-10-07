@@ -5,3 +5,9 @@ type Team struct {
     Password string `json:"password" binding:"min=8,max=128,required"`
     Points int64 `gorm:"default:0"`
 }
+
+type APITeam struct {
+    Username string
+    Points int64
+}
+

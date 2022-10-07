@@ -13,7 +13,6 @@ import (
 	"github.com/wjehee/jota-host/middleware"
 )
 
-
 func main() {
     err := godotenv.Load()
     if err != nil {
@@ -31,9 +30,10 @@ func main() {
     server.POST("/login", controllers.Login)
     apiRoutes := server.Group("/api", middleware.Authenticate())
     {
-        apiRoutes.GET("/team", controllers.GetTeam)
         apiRoutes.POST("/submit", submit)
     }
+    server.GET("/team", controllers.GetTeams)
+    server.GET("/team/:username", controllers.GetTeam)
 
     server.Run()
 }
